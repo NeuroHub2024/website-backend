@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const UserService = require('../service/index')
+const BatchService = require('../service/index')
 
-const service = new UserService()
+const service = new BatchService()
 
 router.get('/', async (req, res)=> {
-    res.send('User service running here')
+    res.send('Batch service running here')
 })
 
 module.exports = router;
