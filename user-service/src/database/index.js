@@ -23,7 +23,7 @@ class UserRepository {
             await newUser.save()
             return newUser
         } catch (err) {
-            throw new ApiError(err)
+            throw new ApiError(err.message)
         }
     }
 

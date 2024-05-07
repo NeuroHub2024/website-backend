@@ -2,9 +2,10 @@ const express = require('express')
 const {createProxyMiddleware} = require('http-proxy-middleware')
 const cookieParser = require('cookie-parser')
 const config = require('./config/index')
-
+const swagger = require('./swagger');
 const app = express()
 
+app.use('/api-docs1', swagger.serve, swagger.setup);
 
 app.get('/', (req, res)=>{
     res.send('Gateway service running here')
@@ -31,3 +32,4 @@ app.use(express.urlencoded({extended: false}))
 app.use(cookieParser())
 
 app.listen(config.GATEWAY_PORT, ()=> console.log(`Gateway service running at ${config.BASE_URL + config.GATEWAY_PORT}`))
+

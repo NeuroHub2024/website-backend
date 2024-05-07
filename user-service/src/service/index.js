@@ -35,8 +35,8 @@ class UserService {
             if(user){
                 throw new ValidationError('User already exists')
             }
-            password=null;
             user = await this.repo.addUser({username, password})
+            password=null;
             return new RequestResponse(user, "New user added")
 
         }catch(err){
