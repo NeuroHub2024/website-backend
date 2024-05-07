@@ -74,7 +74,7 @@ router.post('/adduser', async (req, res, next) => {
         const response = await service.addUser(req.body);
         res.json(response);
     } catch (err) {
-        res.json(err);
+        next(err)
     }
 });
 //#endregion
@@ -117,6 +117,15 @@ router.post('/login', async (req, res, next) => {
 //#endregion
 
 //#region AUTHENTICATE USER : [ALL] : POST /user/authenticate
+router.post('/authenticate', async (req, res, next)=>{
+    try{
+        const token = req.cookies.token
+        const response = await service.authenticateUser(token)
+        res.status(response.status).json(response.data)
+    }catch(err){
+        next(err)
+    }
+})
 //#endregion
 
 module.exports = router;
