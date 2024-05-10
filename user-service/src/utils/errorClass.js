@@ -13,7 +13,7 @@ class AppError extends Error {
         super(desc)
         Object.setPrototypeOf(this, new.target.prototype)
         this.name = name
-        this.statusCode = statusCode
+        this.status = statusCode
         this.description, desc
 
         Error.captureStackTrace(this)

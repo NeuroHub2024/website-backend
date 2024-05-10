@@ -7,6 +7,7 @@ const crypto = require('crypto');
 class UserService {
     constructor() {
         this.repo = new UserRepository()
+        this.roles = ['Admin', 'Student', 'Teacher']
     }
    
     //#region GET ALL USERS : [ADMIN]
@@ -23,7 +24,7 @@ class UserService {
     //#endregion
 
     //#region ADD NEW USER : [ALL]
-    async addUser({username, password}){
+    async addUser({username, password, role}){
         try{
             if(!username || username == ''){
                 throw new ValidationError('Username not present')
@@ -31,12 +32,15 @@ class UserService {
             if(!password || password == ''){
                 throw new ValidationError('Password not present')
             }
+            if(!role || role == '' || !this.roles.includes(role)){
+                throw new ValidationError('Role invalid')
+            }
 
             let user = await this.repo.findUserByUsername(username)
             if(user){
                 throw new ValidationError('User already exists')
             }
-            user = await this.repo.addUser({username, password})
+            user = await this.repo.addUser({username, password, role})
             password=null;
             return new RequestResponse(user, "New user added")
 

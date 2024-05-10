@@ -15,7 +15,7 @@ app.get('/', (req, res)=>{
 // USER SERVICE
 app.use('/user', createProxyMiddleware({
     target: config.BASE_URL + config.USER_PORT,
-    changeOrigin: true
+    changeOrigin: true,
 }))
 
 // BATCH SERVICE

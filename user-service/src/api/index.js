@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const UserService = require('../service/index');
+const validateRole = require('../middlewares/validateRole');
+const { ApiError, AuthorisationError } = require('../utils/errorClass');
 const service = new UserService();
 
 //#region GET ALL USERS : [ADMIN] : GET /user
@@ -35,10 +37,12 @@ const service = new UserService();
  */
 router.get('/', async (req, res, next) => {
     try {
+        await validateRole(['Admin'], req, res, next)
+
         const response = await service.getAllUsers();
         res.json(response);
     } catch (error) {
-        res.json(error);
+        next(error);
     }
 });
 //#endregion
@@ -104,11 +108,14 @@ router.post('/adduser', async (req, res, next) => {
 router.post('/login', async (req, res, next) => {
     try {
         if (!req.body) {
-            res.status(500).json({
-                message: 'Request object not present'
-            });
+            // res.status(500).json({
+            //     message: 'Request object not present'
+            // });
+            throw new ApiError('Request object not present')
         }
         const response = await service.loginUser(req.body);
+        res.cookie('token', response.data.token)
+        res.cookie('userrole', response.data.user.role)
         res.json(response);
     } catch (err) {
         next(err);
@@ -116,16 +123,24 @@ router.post('/login', async (req, res, next) => {
 });
 //#endregion
 
-//#region AUTHENTICATE USER : [ALL] : POST /user/authenticate
-router.post('/authenticate', async (req, res, next)=>{
-    try{
+//#region AUTHENTICATE USER TOKEN : [ALL] : POST /user/authenticate
+router.post('/authenticate', async (req, res, next) => {
+    try {
         const token = req.cookies.token
+        const userRole = req.cookies.userrole
+        const {roleList} = req.body
+
+        if(roleList) await validateRole(roleList, req, res, next)
+
         const response = await service.authenticateUser(token)
         res.status(response.status).json(response.data)
-    }catch(err){
+    } catch (err) {
         next(err)
     }
 })
+//#endregion
+
+//#region VALIDATE USER ROLE : [ALL] : GET /user/validaterole
 //#endregion
 
 module.exports = router;

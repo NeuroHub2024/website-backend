@@ -11,12 +11,12 @@ app.use(cookieParser())
 
 app.use('/', api)
 
-
-
+//#region ERROR HANDLING MIDDLEWARE
 app.use((error, req, res, next)=>{
-    const statusCode = error.statusCode || 500
+    const status = error.status || 500
     const message = error.message
-    return res.status(statusCode).json({message: message})
+    return res.status(status).json({message: message})
 })
+//#endregion
 
 app.listen(PORT, ()=> console.log(`User service running at http://localhost:${PORT}`))
