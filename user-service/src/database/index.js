@@ -13,9 +13,10 @@ class UserRepository {
     }
 
     async getAllUsers() {
-        const users = await User.find()
-        return users
+        const users = await User.find().select('-password');
+        return users;
     }
+    
 
     async addUser(userObj) {
         try {
