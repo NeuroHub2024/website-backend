@@ -10,42 +10,7 @@ const resetCodeStorage = require('../middlewares/resetCodeStorage');
 const { ApiError, AuthorisationError } = require('../utils/errorClass');
 const service = new UserService();
 
-//#region GET ALL USERS : [ADMIN] : GET /user
-/**
- * @swagger
- * components:
- *  schemas:
- *    User:    
- *     type: object
- *     required:
- *       - username
- *       - password
- *       - role
- *     properties:
- *       username:
- *         type: string
- *         description: User's username
- *       password:
- *         type: string
- *         description: User's password
- *       role:
- *         type: string
- *         enum: ['Admin', 'Teacher', 'Student']
- *         description: User's role
- *         
- */
 
-/**
- * @swagger
- * /:
- *   get:
- *     tags: [Get Users]
- *     summary: To check all users
- *     description: This is used to check all the users
- *     responses:
- *       200:
- *         description: To test Get Method
- */
 router.get('/', async (req, res, next) => {
     try {
         await validateRole(['Admin'], req, res, next)
@@ -58,27 +23,7 @@ router.get('/', async (req, res, next) => {
 });
 //#endregion
 
-//#region NEW USER SIGNUP : [ALL] : POST /user/adduser
-/**
- * @swagger
- * /adduser:
- *   post:
- *     summary: Add a new user
- *     tags: [Users SignUp]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/User'
- *     responses:
- *       200:
- *         description: User added successfully
- *       400:
- *         description: Bad request
- *       500:
- *         description: Internal server error
- */
+
 router.post('/adduser', async (req, res, next) => {
     try {
         if (!req.body) {
@@ -95,26 +40,7 @@ router.post('/adduser', async (req, res, next) => {
 //#endregion
 
 //#region LOGIN A USER : [ALL] : POST /user/login
-/**
- * @swagger
- * /login:
- *   post:
- *     summary: Login User
- *     tags: [Users Login]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/User'
- *     responses:
- *       200:
- *         description: User Login successfully
- *       400:
- *         description: Bad request
- *       500:
- *         description: Internal server error
- */
+
 
 router.post('/login', async (req, res, next) => {
     try {
@@ -195,3 +121,183 @@ router.post('/resetpassword', async (req, res, next) => {
 });
 
 module.exports = router;
+
+
+
+
+
+
+
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *    Signup:    
+ *     type: object
+ *     required:
+ *       - username
+ *       - password
+ *       - role
+ *     properties:
+ *       username:
+ *         type: string
+ *         description: User's username
+ *       password:
+ *         type: string
+ *         description: User's password
+ *       role:
+ *         type: string
+ *         enum: ['Admin', 'Teacher', 'Student']
+ *         description: User's role
+ *         
+ */
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *    Login:    
+ *     type: object
+ *     required:
+ *       - username
+ *       - password
+ *       - role
+ *     properties:
+ *       username:
+ *         type: string
+ *         description: User's username
+ *       password:
+ *         type: string
+ *         description: User's password
+ *         
+ */
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *    Resetpassword:    
+ *     type: object
+ *     required:
+ *       - username
+ *       - resetCode
+ *       - newPassword
+ *     properties:
+ *       username:
+ *         type: string
+ *         description: User's username
+ *       resetCode:
+ *         type: string
+ *         description: User's RecetCode
+ *       newPassword:
+ *         type: string
+ *         description: New Password
+ *         
+ */
+//#region GET ALL USERS : [ADMIN] : GET /user
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *    forgotpassword:    
+ *     type: object
+ *     required:
+ *       - username
+ *     properties:
+ *       username:
+ *         type: string
+ *         description: User's username      
+ */
+
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     tags: [Get Users]
+ *     summary: To check all users
+ *     description: This is used to check all the users
+ *     responses:
+ *       200:
+ *         description: To test Get Method
+ */
+//#region NEW USER SIGNUP : [ALL] : POST /user/adduser
+/**
+ * @swagger
+ * /adduser:
+ *   post:
+ *     summary: Add a new user
+ *     tags: [Users SignUp]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Signup'
+ *     responses:
+ *       200:
+ *         description: User added successfully
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /login:
+ *   post:
+ *     summary: Login User
+ *     tags: [Users Login]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Login'
+ *     responses:
+ *       200:
+ *         description: User Login successfully
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: Internal server error
+ */
+/**
+ * @swagger
+ * /forgotpassword:
+ *   post:
+ *     summary: Forgot the Password
+ *     tags: [Users Forgot Password]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/forgotpassword'
+ *     responses:
+ *       200:
+ *         description: User Login successfully
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /resetpassword:
+ *   post:
+ *     summary: Reset the password
+ *     tags: [Users Reset Password]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Resetpassword'
+ *     responses:
+ *       200:
+ *         description: Password Recet successfully
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: Internal server error
+ */
