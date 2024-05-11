@@ -1,12 +1,5 @@
 const mongoose = require('mongoose')
 const {Schema} = mongoose
-/**
- * @swagger
- * tags:
- *   name: Users
- *   description: User management
- */
-
 
 const userSchema = new Schema({
     username: { 

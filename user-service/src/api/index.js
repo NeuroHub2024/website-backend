@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const UserService = require('../service/index');
 const validateRole = require('../middlewares/validateRole');
+const updatePassword = require('../middlewares/updatePassword');
+const validateResetCode = require('../middlewares/validateResetCode');
+const generateResetCode = require('../middlewares/generateResetCode');
+const sendResetCodeEmail = require('../middlewares/sendResetCodeEmail');
+const resetCodeStorage = require('../middlewares/resetCodeStorage');
 const { ApiError, AuthorisationError } = require('../utils/errorClass');
 const service = new UserService();
 
@@ -15,6 +20,7 @@ const service = new UserService();
  *     required:
  *       - username
  *       - password
+ *       - role
  *     properties:
  *       username:
  *         type: string
@@ -22,6 +28,11 @@ const service = new UserService();
  *       password:
  *         type: string
  *         description: User's password
+ *       role:
+ *         type: string
+ *         enum: ['Admin', 'Teacher', 'Student']
+ *         description: User's role
+ *         
  */
 
 /**
@@ -142,5 +153,45 @@ router.post('/authenticate', async (req, res, next) => {
 
 //#region VALIDATE USER ROLE : [ALL] : GET /user/validaterole
 //#endregion
+
+//#region FORGOT PASSWORD
+router.post('/forgotpassword', async (req, res, next) => {
+    try {
+        const { username } = req.body;
+        if (!username) {
+            throw new ApiError('Username is required');
+        }
+        const resetCode = await generateResetCode(); 
+        resetCodeStorage.setResetCode(resetCode);
+        await sendResetCodeEmail(username, resetCode); 
+
+        res.json({ message: 'Reset code sent successfully' });
+    } catch (err) {
+        next(err);
+    }
+});
+
+//#region RESET PASSWORD
+router.post('/resetpassword', async (req, res, next) => {
+    try {
+        const { username, resetCode, newPassword } = req.body;
+        if (!username || !resetCode || !newPassword) {
+            throw new ApiError('Username, reset code, and new password are required');
+        }
+        
+        const isValidCode = await validateResetCode(resetCodeStorage.getResetCode(),resetCode); // Implement your own function
+
+        if (!isValidCode) {
+            throw new ApiError('Invalid reset code');
+        }
+
+        
+        await updatePassword(username, newPassword); // Implement your own function to update the password
+
+        res.json({ message: 'Password updated successfully' });
+    } catch (err) {
+        next(err);
+    }
+});
 
 module.exports = router;

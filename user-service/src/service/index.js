@@ -4,6 +4,7 @@ const RequestResponse = require('../utils/ResponseClass')
 const jwt = require('jsonwebtoken');
 const {JWT_SECRET} = require('../config/index')
 const crypto = require('crypto');
+const nodemailer = require('nodemailer');
 class UserService {
     constructor() {
         this.repo = new UserRepository()
@@ -41,7 +42,6 @@ class UserService {
                 throw new ValidationError('User already exists')
             }
             user = await this.repo.addUser({username, password, role})
-            password=null;
             return new RequestResponse(user, "New user added")
 
         }catch(err){
@@ -89,6 +89,7 @@ class UserService {
 
     //#region AUTHENTICATE USER : [ALL]
     async authenticateUser(token){
+        debugger
         try{
             if(!token){
                 throw new ValidationError('Token not provided')
@@ -115,6 +116,10 @@ class UserService {
         }
     }
     //#endregion
+    
+
+    
+    
 }
 
 module.exports = UserService;
