@@ -120,6 +120,73 @@ router.post('/resetpassword', async (req, res, next) => {
     }
 });
 
+//#region CHANGE PASSWORD
+router.post('/changepassword', async (req, res, next) => {
+    try {
+        const { username, currentPassword, newPassword } = req.body;
+        if (!username || !currentPassword || !newPassword) {
+            throw new ApiError('Username, current password, and new password are required');
+        }
+        
+        // First, authenticate the user to ensure they are allowed to change the password
+        const authResponse = await service.loginUser({ username, password: currentPassword });
+        if (authResponse.status !== 200) {
+            throw new ApiError('Invalid current password');
+        }
+        
+        // If authentication is successful, proceed to update the password
+        await updatePassword(username, newPassword); // Implement your own function to update the password
+
+        res.json({ message: 'Password changed successfully' });
+    } catch (err) {
+        next(err);
+    }
+});
+//#endregion
+
+//#region GET USER BY ID
+router.get('/id/:id', async (req, res, next) => {
+
+    try {
+        const { id } = req.params;
+
+        if (!id) {
+            throw new ApiError('ID is required');
+        }
+
+        const user = await service.getUserById(id);
+
+        if (!user) {
+            throw new ApiError('User not found');
+        }
+        res.json(user);
+    } catch (err) {
+        next(err);
+    }
+});
+//#endregion
+
+//#region GET USER BY USERNAME
+router.get('/username/:username', async (req, res, next) => {
+    try {
+        const { username } = req.params;
+
+       
+        if (!username) {
+            throw new ApiError('Username is required');
+        }
+        const user = await service.getUserByUsername(username);
+
+        if (!user) {
+            throw new ApiError('User not found');
+        }
+        res.json(user);
+    } catch (err) {
+        next(err);
+    }
+});
+//#endregion
+
 module.exports = router;
 
 
@@ -192,6 +259,28 @@ module.exports = router;
  *         description: New Password
  *         
  */
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *    Changepassword:    
+ *     type: object
+ *     required:
+ *       - username
+ *       - currentPassword
+ *       - newPassword
+ *     properties:
+ *       username:
+ *         type: string
+ *         description: User's username
+ *       currentPassword:
+ *         type: string
+ *         description: User's RecetCode
+ *       newPassword:
+ *         type: string
+ *         description: New Password
+ *         
+ */
 //#region GET ALL USERS : [ADMIN] : GET /user
 /**
  * @swagger
@@ -209,9 +298,9 @@ module.exports = router;
 
 /**
  * @swagger
- * /:
+ * /user:
  *   get:
- *     tags: [Get Users]
+ *     tags: [Get]
  *     summary: To check all users
  *     description: This is used to check all the users
  *     responses:
@@ -221,10 +310,10 @@ module.exports = router;
 //#region NEW USER SIGNUP : [ALL] : POST /user/adduser
 /**
  * @swagger
- * /adduser:
+ * /user/adduser:
  *   post:
  *     summary: Add a new user
- *     tags: [Users SignUp]
+ *     tags: [Users]
  *     requestBody:
  *       required: true
  *       content:
@@ -242,10 +331,10 @@ module.exports = router;
 
 /**
  * @swagger
- * /login:
+ * /user/login:
  *   post:
  *     summary: Login User
- *     tags: [Users Login]
+ *     tags: [Users]
  *     requestBody:
  *       required: true
  *       content:
@@ -262,10 +351,10 @@ module.exports = router;
  */
 /**
  * @swagger
- * /forgotpassword:
+ * /user/forgotpassword:
  *   post:
  *     summary: Forgot the Password
- *     tags: [Users Forgot Password]
+ *     tags: [Users]
  *     requestBody:
  *       required: true
  *       content:
@@ -283,10 +372,10 @@ module.exports = router;
 
 /**
  * @swagger
- * /resetpassword:
+ * /user/resetpassword:
  *   post:
  *     summary: Reset the password
- *     tags: [Users Reset Password]
+ *     tags: [Users]
  *     requestBody:
  *       required: true
  *       content:
@@ -301,3 +390,94 @@ module.exports = router;
  *       500:
  *         description: Internal server error
  */
+/**
+ * @swagger
+ * /user/changepassword:
+ *   post:
+ *     summary: Change the password
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Changepassword'
+ *     responses:
+ *       200:
+ *         description: Password Recet successfully
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /user/id/{id}:
+ *   get:
+ *     tags: [Users]
+ *     summary: Get user by ID
+ *     description: Retrieve user information based on the provided ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: User ID
+ *     responses:
+ *       '200':
+ *         description: Successful response
+ */
+/**
+ * @swagger
+ * /user/username/{username}:
+ *   get:
+ *     tags: [Users]
+ *     summary: Get user by Username
+ *     description: Retrieve user information based on the provided User Name
+ *     parameters:
+ *       - in: path
+ *         name: username
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: User Name
+ *     responses:
+ *       '200':
+ *         description: Successful response
+ */
+
+/**
+ * @swagger
+ * /user/authenticate:
+ *   post:
+ *     tags: [User]
+ *     summary: Authenticate user token
+ *     description: Authenticate user token and check user role
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               roleList:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *           example:
+ *             roleList: ["Admin", "User"]
+ *     responses:
+ *       '200':
+ *         description: User authenticated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: User authenticated successfully
+ */
+
