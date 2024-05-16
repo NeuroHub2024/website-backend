@@ -209,6 +209,9 @@ module.exports = router;
  *       username:
  *         type: string
  *         description: User's username
+ *       email:
+ *         type: string
+ *         description: User's email
  *       password:
  *         type: string
  *         description: User's password
@@ -455,19 +458,6 @@ module.exports = router;
  *     tags: [User]
  *     summary: Authenticate user token
  *     description: Authenticate user token and check user role
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               roleList:
- *                 type: array
- *                 items:
- *                   type: string
- *           example:
- *             roleList: ["Admin", "User"]
  *     responses:
  *       '200':
  *         description: User authenticated successfully
