@@ -6,6 +6,7 @@ const validateRole = async (roleList, req, res, next)=>{
     if(!roleList.includes(userRole)){
         throw new AuthorisationError(`User of role ${userRole} is not authorised to this route`)
     }
+    next()
 }
 
 module.exports = validateRole

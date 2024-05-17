@@ -10,7 +10,7 @@ const resetCodeStorage = require('../middlewares/resetCodeStorage');
 const { ApiError, AuthorisationError } = require('../utils/errorClass');
 const service = new UserService();
 
-
+//#region GET ALL USERS : [ADMIN] : GET /user
 router.get('/', async (req, res, next) => {
     try {
         await validateRole(['Admin'], req, res, next)
@@ -23,7 +23,7 @@ router.get('/', async (req, res, next) => {
 });
 //#endregion
 
-
+//#region ADD A NEW USER : [ALL] : POST /user/adduser
 router.post('/adduser', async (req, res, next) => {
     try {
         if (!req.body) {
@@ -40,8 +40,6 @@ router.post('/adduser', async (req, res, next) => {
 //#endregion
 
 //#region LOGIN A USER : [ALL] : POST /user/login
-
-
 router.post('/login', async (req, res, next) => {
     try {
         if (!req.body) {
