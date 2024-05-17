@@ -27,7 +27,7 @@ class UserRepository {
             throw new ApiError(err.message)
         }
     }
-
+//Rishav 
     async findUserByUsername(username){
         try{
             const user = await User.findOne({username: username})
@@ -40,7 +40,15 @@ class UserRepository {
             throw new ApiError(err.message)
         }
     }
-
+    
+    async findById(id) {
+        try {
+            const user = await User.findById(id);
+            return user;
+        } catch (err) {
+            throw new ApiError(err.message);
+        }
+    }
 }
 
 

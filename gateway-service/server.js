@@ -5,7 +5,7 @@ const config = require('./config/index')
 const swagger = require('./swagger');
 const app = express()
 
-app.use('/api-docs1', swagger.serve, swagger.setup);
+app.use('/api', swagger.serve, swagger.setup);
 
 app.get('/', (req, res)=>{
     res.send('Gateway service running here')

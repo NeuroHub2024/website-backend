@@ -117,9 +117,25 @@ class UserService {
     }
     //#endregion
     
-
+    async getUserByUsername(username) {
+        try {
+            // Assuming your database interface has a method to fetch user by username
+            const user = await this.repo.findUserByUsername(username);
+            return user;
+        } catch (error) {
+            throw new Error('Error fetching user by username');
+        }
+    }
     
-    
+    async getUserById(id) {
+        try {
+            // Assuming your database interface has a method to fetch user by id
+            const user = await this.repo.findById(id);
+            return user;
+        } catch (error) {
+            throw new Error('Error fetching user by id');
+        }
+    }
 }
 
 module.exports = UserService;
