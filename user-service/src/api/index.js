@@ -13,8 +13,7 @@ const service = new UserService();
 //#region GET ALL USERS : [ADMIN] : GET /user
 router.get('/', async (req, res, next) => {
     try {
-        await validateRole(['Admin'], req, res, next)
-
+        // await validateRole(['Admin'], req, res, next);
         const response = await service.getAllUsers();
         res.json(response);
     } catch (error) {
@@ -67,8 +66,8 @@ router.post('/authenticate', async (req, res, next) => {
 
         if(roleList) await validateRole(roleList, req, res, next)
 
-        const response = await service.authenticateUser(token)
-        res.status(response.status).json(response.data)
+        const response = await service.authenticateUser(token);
+        res.status(response.status).json(response.data);
     } catch (err) {
         next(err)
     }
