@@ -1,0 +1,6 @@
+Current Tasks : 
+1. Make route plan for assignment service : done
+2. make the routes
+3. figure out connection with batch
+4. code all the requirements
+5. test it out
