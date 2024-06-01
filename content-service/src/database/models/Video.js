@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const User = require('./User')
-const Batch = require('./Batch')
+// const User = require('./User')
+// const Batch = require('./Batch')
 const {Schema} = mongoose
 
 const videoSchema = new Schema({
@@ -8,7 +8,10 @@ const videoSchema = new Schema({
         type: String,
         required: true
     },
-    uploadTimeStamp: Date,
+    uploadTimeStamp: {
+        type: Date,
+        default: Date.now
+    },
     title: String,
     teacher: {
         type: Schema.Types.ObjectId,

@@ -2,4 +2,5 @@
 /batch-service/node_modules
 /gateway-service/node_modules
 /content-service/node_modules
+/assignment-service/node_modules
 tasks_and_plan.txt

@@ -19,6 +19,17 @@ class contentRepository {
     }
     //#endregion
 
+    //#region GET A LECTURE BY ID
+    async getLectureById(lectureId){
+        try{
+            const lecture = await Video.findById(lectureId)
+            return lecture;
+        }catch(err){
+            throw new ApiError('DB Error : ' + err.message)
+        }
+    }
+    //#endregion
+
     //#region ADD A NEW LECTURE
     async addLecture(lectureObj){
         try{

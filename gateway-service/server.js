@@ -24,6 +24,18 @@ app.use('/batch', createProxyMiddleware({
     changeOrigin: true
 }))
 
+// CONTENT SERVICE
+app.use('/lecture', createProxyMiddleware({
+    target: config.BASE_URL + config.CONTENT_PORT,
+    changeOrigin: true
+}))
+
+// ASSIGNMENT SERVICE
+app.use('/assignment', createProxyMiddleware({
+    target: config.BASE_URL + config.ASSIGNMENT_PORT,
+    changeOrigin: true
+}))
+
 // TEST SERVICE
 //#endregion GATEWAY ROUTES END
 
