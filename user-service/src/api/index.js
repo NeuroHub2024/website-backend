@@ -48,8 +48,8 @@ router.post('/login', async (req, res, next) => {
             throw new ApiError('Request object not present')
         }
         const response = await service.loginUser(req.body);
-        res.cookie('token', response.data.token)
-        res.cookie('userrole', response.data.user.role)
+        res.cookie('token', response.data.token);
+        res.cookie('userrole', response.data.user.role);
         res.json(response);
     } catch (err) {
         next(err);
@@ -60,12 +60,11 @@ router.post('/login', async (req, res, next) => {
 //#region AUTHENTICATE USER TOKEN : [ALL] : POST /user/authenticate
 router.post('/authenticate', async (req, res, next) => {
     try {
-        const token = req.cookies.token
-        const userRole = req.cookies.userrole
+        const token = req.cookies.token;
+        const userRole = req.cookies.userrole;
         const {roleList} = req.body
 
         if(roleList) await validateRole(roleList, req, res, next)
-
         const response = await service.authenticateUser(token);
         res.status(response.status).json(response.data);
     } catch (err) {

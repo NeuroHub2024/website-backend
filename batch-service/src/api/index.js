@@ -1,8 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const BatchService = require('../service/index')
-
+const { authUser } = require('../middlewares/authMiddleware');
 const service = new BatchService()
+
+router.use(authUser);
 
 router.get('/', async (req, res)=> {
     res.send('Batch service running here')
@@ -45,15 +47,21 @@ router.get('/:id', async (req, res, next) => {
 //#endregion
 
 //#region CREATE A NEW BATCH : [ADMIN, TEACHER]
-router.post('/', async (req, res, next) => {
+
+router.post('/', authUser, async (req, res, next) => {
     try {
-        const { name, language } = req.body;
-        const newBatch = await batchService.createBatch(name, language);
-        res.status(201).json(newBatch);
+        const userRole = req.cookies.userRole;
+        if (userRole === 'teacher' || userRole === 'admin') {
+            
+            await batchService.createBatch(req, res);
+        } else {
+            res.status(403).json({ error: 'Unauthorized. Only teachers and admins are allowed to create batches.' });
+        }
     } catch (err) {
         next(err);
     }
 });
+
 //#endregion
 
 //#region UPDATE BATCH : [ADMIN, TEACHER]
@@ -165,8 +173,5 @@ router.delete('/:batchId/assignment/:assignmentId', async (req, res, next) => {
     }
 });
 //#endregion
-
-module.exports = router;
-
 
 module.exports = router;

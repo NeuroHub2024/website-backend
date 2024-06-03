@@ -85,18 +85,21 @@ class BatchService {
     //#endregion
 
     //#region CREATE A NEW BATCH : [ADMIN, TEACHER]
-    async createBatch(name, language) {
+    async createBatch(req, res) {
         try {
-            const newBatch = await this.repo.createBatch({ name, language });
-            return newBatch;
+            const { name, language } = req.body;
+            const userId = req.userData._id; // Correct extraction of userId
+            const newBatch = await this.repo.createBatch({ name, language, teachers: userId });
+            res.status(201).json(newBatch);
         } catch (err) {
             if (err instanceof ApiError) {
-                throw err;
+                res.status(500).json({ message: err.message });
             } else {
-                throw new ApiError('Service Error : ' + err.message);
+                res.status(500).json({ message: 'Service Error: ' + err.message });
             }
         }
     }
+    
     //#endregion
 
     //#region UPDATE BATCH : [ADMIN, TEACHER]

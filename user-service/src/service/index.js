@@ -25,10 +25,13 @@ class UserService {
     //#endregion
 
     //#region ADD NEW USER : [ALL]
-    async addUser({username, password, role}){
+    async addUser({username,email, password, role}){
         try{
             if(!username || username == ''){
                 throw new ValidationError('Username not present')
+            }
+            if(!email || email == ''){
+                throw new ValidationError('email not present')
             }
             if(!password || password == ''){
                 throw new ValidationError('Password not present')
@@ -41,7 +44,7 @@ class UserService {
             if(user){
                 throw new ValidationError('User already exists')
             }
-            user = await this.repo.addUser({username, password, role})
+            user = await this.repo.addUser({username,email, password, role})
             return new RequestResponse(user, "New user added")
 
         }catch(err){
