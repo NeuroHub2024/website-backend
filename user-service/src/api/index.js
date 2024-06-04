@@ -13,7 +13,9 @@ const service = new UserService();
 //#region GET ALL USERS : [ADMIN] : GET /user
 router.get('/', async (req, res, next) => {
     try {
-        await validateRole(['Admin'], req, res, next)
+        // await validateRole(['Admin'], req, res, next)
+        const userRole = req.cookies.userrole
+        if(userRole != 'Admin') throw new AuthorisationError('API Error : Not authorised')
 
         const response = await service.getAllUsers();
         res.json(response);
@@ -65,7 +67,8 @@ router.post('/authenticate', async (req, res, next) => {
         const userRole = req.cookies.userrole
         const {roleList} = req.body
 
-        if(roleList) await validateRole(roleList, req, res, next)
+        // if(roleList) await validateRole(roleList, req, res, next)
+        if(!roleList.includes(userRole)) throw new AuthorisationError('API Error : User of this role is not authorised')
 
         const response = await service.authenticateUser(token)
         res.status(response.status).json(response.data)
