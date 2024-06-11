@@ -1,29 +1,49 @@
-const express = require('express')
-const LectureService = require('../service/index')
-const router = express.Router()
 
-const service = new LectureService()
+const express = require('express');
+const LectureService = require('../service/index');
+const { authUserAndBatch } = require('../middlewares/auth');
+const router = express.Router();
+router.use(authUserAndBatch);
+const service = new LectureService();
 
-router.get('/', async(req, res)=>{
-    res.json({msg: 'Content Service running'})
-})
+router.get('/', async (req, res, next) => {
+    try {
+        const response = await service.getAllLectures();
+        res.status(200).json(response.data);
+    } catch (err) {
+        next(err);
+    }
+});
 
-router.get('/:lectureId', async(req, res)=>{
-    // try{
-    //     const lectureId = req.params.lectureId
-    //     const response = await service.getLectureById(lectureId)
-    //     res.status(response.status).json(response.data)
-    // }catch(err){
-    //     next(err)
-    // }
+router.get('/:lectureId', async (req, res, next) => {
+    try {
+        const lectureId = req.params.lectureId;
+        const response = await service.getLectureById(lectureId);
+        res.status(response.status).json(response.data);
+    } catch (err) {
+        next(err);
+    }
+});
 
-    res.json({
-        url: 'https://www.youtube.com/watch?v=71eUes30gwc',
-        uploadTimeStamp: '1716811044168',
-        title: 'Is universe really just a Black Hole',
-        teacher: 'Kurzegsagt',
-        batch: 'Astronomy',
-    })
-})
+router.post('/', authUserAndBatch, async (req, res, next) => {
+    try {
+
+        const response = await service.addLecture(req,res);
+        res.status(response.status).json(response.data);
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.put('/:lectureId', authUserAndBatch, async (req, res, next) => {
+    try {
+        const lectureId = req.params.lectureId;
+        const newLectureObj = req.body;
+        const response = await service.updateLecture(lectureId, newLectureObj);
+        res.status(response.status).json(response.data);
+    } catch (err) {
+        next(err);
+    }
+});
 
 module.exports = router;

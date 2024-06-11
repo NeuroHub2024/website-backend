@@ -65,12 +65,15 @@ router.post('/authenticate', async (req, res, next) => {
     try {
         const token = req.cookies.token;
         const userRole = req.cookies.userrole;
-        const {roleList} = req.body
+        console.log(userRole)
+        const {roleList} = req.body;
+        console.log(roleList)
 
-        // if(roleList) await validateRole(roleList, req, res, next)
-        if(!roleList.includes(userRole)) throw new AuthorisationError('API Error : User of this role is not authorised')
+        if(roleList) await validateRole(roleList, req, res, next)
+        // if(!roleList.includes(userRole)) throw new AuthorisationError('API Error : User of this role is not authorised')
 
         const response = await service.authenticateUser(token)
+        console.log(response);
         res.status(response.status).json(response.data)
     } catch (err) {
         next(err)

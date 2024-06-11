@@ -76,12 +76,15 @@ class BatchRepository {
 
     //#region ADD TEACHER TO BATCH
     async addTeacherToBatch(batchId, teacherId) {
+       
         try {
             const updatedBatch = await Batch.findByIdAndUpdate(
+                
                 batchId,
                 { $addToSet: { teachers: teacherId } },
                 { new: true }
             );
+            console.log(updatedBatch);
             return updatedBatch;
         } catch (err) {
             throw new ApiError('DB Error : ' + err.message);

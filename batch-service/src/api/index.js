@@ -6,11 +6,6 @@ const service = new BatchService()
 
 router.use(authUser);
 
-router.get('/', async (req, res)=> {
-    res.send('Batch service running here')
-})
-
-
 const batchService = new BatchService();
 
 //#region GET ALL BATCHES : [ADMIN]

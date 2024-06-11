@@ -1,58 +1,50 @@
-const mongoose = require('mongoose')
-const Video = require('./models/Video')
-const connectToDb = require('./connection')
-const { ApiError } = require('../utils/errorClass')
+
+const mongoose = require('mongoose');
+const Video = require('./models/Video');
+const connectToDb = require('./connection');
+const { ApiError } = require('../utils/errorClass');
 
 class contentRepository {
     constructor(){
-        connectToDb()
+        connectToDb();
     }
 
-    //#region GET ALL LECTURES
     async getAllLectures(){
         try{
-            const lectures = await Video.find()
+            const lectures = await Video.find();
             return lectures;
-        }catch(err){
-            throw new ApiError('DB Error : ' + err.message)
+        } catch(err) {
+            throw new ApiError('DB Error : ' + err.message);
         }
     }
-    //#endregion
 
-    //#region GET A LECTURE BY ID
     async getLectureById(lectureId){
         try{
-            const lecture = await Video.findById(lectureId)
+            const lecture = await Video.findById(lectureId).populate('teacher batch');
             return lecture;
-        }catch(err){
-            throw new ApiError('DB Error : ' + err.message)
+        } catch(err) {
+            throw new ApiError('DB Error : ' + err.message);
         }
     }
-    //#endregion
 
-    //#region ADD A NEW LECTURE
     async addLecture(lectureObj){
         try{
-            const lecture = new Video(lectureObj)
-            await lecture.save()
-
-            return lecture
-        }catch(err){
-            throw new ApiError('DB Error : ' + err.message)
+            const lecture = new Video(lectureObj);
+            await lecture.save();
+            return lecture;
+        } catch(err) {
+            throw new ApiError('DB Error : ' + err.message);
         }
     }
-    //#endregion
 
-    //#region UPDATE LECTURE
-    async updateLecture(newLectureObj){
+    async updateLecture(lectureId, newLectureObj){
         try{
-            const newLecture = await Video.findByIdAndUpdate(newLectureObj)
-            return newLectureObj
-        }catch(err){
-            throw new ApiError('DB Error : ' + err.message)
+            const updatedLecture = await Video.findByIdAndUpdate(lectureId, newLectureObj, { new: true });
+            return updatedLecture;
+        } catch(err) {
+            throw new ApiError('DB Error : ' + err.message);
         }
     }
-    //#endregion
 }
 
-module.exports = contentRepository
+module.exports = contentRepository;

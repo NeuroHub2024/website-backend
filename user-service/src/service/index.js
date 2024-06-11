@@ -92,13 +92,13 @@ class UserService {
 
     //#region AUTHENTICATE USER : [ALL]
     async authenticateUser(token){
-        debugger
         try{
             if(!token){
                 throw new ValidationError('Token not provided')
             }
 
             const payload = jwt.verify(token, JWT_SECRET)
+            console.log(payload)
             if(payload){
                 let user = await this.repo.findUserByUsername(payload.username)
                 if(!user){
