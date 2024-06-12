@@ -18,7 +18,7 @@ router.get('/', async (req, res, next) => {
 });
 //#endregion
 
-//#region GET BATCHES BY USERNAME : [ADMIN, TEACHER, STUDENT]
+//#region GET BATCHES BY USERNAME : [ADMIN, TEACHER, STUDENT] : check later
 router.get('/user/:username', async (req, res, next) => {
     try {
         const batches = await batchService.findBatchesByUsername(req.params.username);
@@ -44,7 +44,8 @@ router.get('/:id', async (req, res, next) => {
 router.post('/', authUser, async (req, res, next) => {
     try {
         const userRole = req.cookies.userRole;
-        if (userRole === 'teacher' || userRole === 'admin') {
+        console.log(userRole)
+        if (userRole === 'Teacher' || userRole === 'Admin') {
             await batchService.createBatch(req, res);
         } else {
             res.status(403).json({ error: 'Unauthorized. Only teachers and admins are allowed to create batches.' });
