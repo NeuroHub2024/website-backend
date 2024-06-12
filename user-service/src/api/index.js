@@ -69,8 +69,8 @@ router.post('/authenticate', async (req, res, next) => {
         const {roleList} = req.body;
         console.log(roleList)
 
-        if(roleList) await validateRole(roleList, req, res, next)
-        // if(!roleList.includes(userRole)) throw new AuthorisationError('API Error : User of this role is not authorised')
+        // if(roleList) await validateRole(roleList, req, res, next)
+        if(!roleList.includes(userRole)) throw new AuthorisationError('API Error : User of this role is not authorised')
 
         const response = await service.authenticateUser(token)
         console.log(response);

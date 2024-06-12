@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const AssignmentService = require('../service/index')
 const { AuthorisationError } = require('../utils/errorClass')
+const { authUser } = require('../middlewares/authMiddleware')
 
 const service = new AssignmentService()
 
@@ -37,10 +38,20 @@ router.post('/createassignment/:batchId', async (req, res, next)=> {
 })
 
 //#region SUBMIT RESPONSE TO ASSIGNMENT : [STUDENT, ADMIN] : POST /assignment/createresponse
-router.post('/createresponse/:assignmentId', async(req, res, next)=>{
+router.post('/createresponse/:assignmentId', authUser, async(req, res, next)=>{
     try{
         const assignmentId = req.params.assignmentId
         const {studentId, fileUrl} = req.body
+        console.log(req.userData)
+        console.log(req.cookies.token)
+        // const studentDetails = await fetch('http://localhost:5000/user/authenticate', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Cookie': `token=${req.cookies.token};role=${req.cookies.role}`
+        //     },
+        // })
+        // console.log(studentDetails)
         const inputs = {studentId, fileUrl, assignmentId}
         const response = await service.createResponse(inputs)
         res.json(response.data)

@@ -64,9 +64,13 @@ class AssignmentService {
             }
 
             const responseObj = {studentId, fileUrl, assignmentId}
-            const response = await this.repo.createResponse(responseObj)
             let assignment = await this.repo.getAssignmentById(assignmentId)
+
+            responseObj.isLate = assignment.due < Date.now()
+
+            const response = await this.repo.createResponse(responseObj)
             assignment.responses.push(response)
+
             const newAssignment = await this.repo.editAssignmentById(assignmentId, assignment)
             return new RequestResponse(response)
         }catch(err){
