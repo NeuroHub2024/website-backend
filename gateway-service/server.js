@@ -14,25 +14,25 @@ app.get('/', (req, res)=>{
 //#region GATEWAY ROUTES
 // USER SERVICE
 app.use('/user', createProxyMiddleware({
-    target: config.USER_URL,
+    target: 'https://user-service-4wcl.onrender.com',
     changeOrigin: true,
 }))
 
 // BATCH SERVICE
 app.use('/batch', createProxyMiddleware({
-    target: config.BATCH_URL,
+    target: 'https://batch-service.onrender.com',
     changeOrigin: true
 }))
 
 // CONTENT SERVICE
 app.use('/lecture', createProxyMiddleware({
-    target: config.CONTENT_URL,
+    target: 'https://content-service-ib0m.onrender.com',
     changeOrigin: true
 }))
 
 // ASSIGNMENT SERVICE
 app.use('/assignment', createProxyMiddleware({
-    target: config.ASSIGNMENT_URL,
+    target: 'https://assignment-service-7w4r.onrender.com',
     changeOrigin: true
 }))
 
@@ -43,5 +43,5 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(cookieParser())
 
-app.listen(config.GATEWAY_PORT, ()=> console.log(`Gateway service running at ${config.BASE_URL + config.GATEWAY_PORT}`))
+app.listen(config.GATEWAY_PORT, ()=> console.log(`Gateway service running at http://localhost:5000`))
 
