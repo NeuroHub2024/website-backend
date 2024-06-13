@@ -8,7 +8,7 @@ const swagger = require('./swagger');
 
 const app = express()
 
-app.use('/user', swagger.serve, swagger.setup);
+app.use('/api', swagger.serve, swagger.setup);
 
 
 
