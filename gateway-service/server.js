@@ -43,5 +43,5 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(cookieParser())
 
-app.listen(config.GATEWAY_PORT, ()=> console.log(`Gateway service running at http://localhost:5000`))
+app.listen(config.PORT, ()=> console.log(`Gateway service running at http://localhost:5000`))
 
