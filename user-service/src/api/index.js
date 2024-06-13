@@ -194,11 +194,6 @@ router.get('/username/:username', async (req, res, next) => {
 module.exports = router;
 
 
-
-
-
-
-
 /**
  * @swagger
  * components:
@@ -302,6 +297,7 @@ module.exports = router;
  *         type: string
  *         description: User's username      
  */
+
 
 /**
  * @swagger
@@ -474,4 +470,8 @@ module.exports = router;
  *                   type: string
  *                   example: User authenticated successfully
  */
+
+
+
+
 

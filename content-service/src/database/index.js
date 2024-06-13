@@ -20,7 +20,8 @@ class contentRepository {
 
     async getLectureById(lectureId){
         try{
-            const lecture = await Video.findById(lectureId).populate('teacher batch');
+            const lecture = await Video.findById(lectureId);
+            console.log(lecture)
             return lecture;
         } catch(err) {
             throw new ApiError('DB Error : ' + err.message);
@@ -45,6 +46,14 @@ class contentRepository {
             throw new ApiError('DB Error : ' + err.message);
         }
     }
-}
 
+    async deleteLecture(lectureId) {
+        try {
+            await Video.findByIdAndDelete(lectureId);
+        } catch (err) {
+            throw new ApiError('DB Error : ' + err.message);
+        }
+    }
+}
+  
 module.exports = contentRepository;
