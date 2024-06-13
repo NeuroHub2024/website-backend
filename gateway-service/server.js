@@ -14,25 +14,25 @@ app.get('/', (req, res)=>{
 //#region GATEWAY ROUTES
 // USER SERVICE
 app.use('/user', createProxyMiddleware({
-    target: config.BASE_URL + config.USER_PORT,
+    target: config.USER_URL,
     changeOrigin: true,
 }))
 
 // BATCH SERVICE
 app.use('/batch', createProxyMiddleware({
-    target: config.BASE_URL + config.BATCH_PORT,
+    target: config.BATCH_URL,
     changeOrigin: true
 }))
 
 // CONTENT SERVICE
 app.use('/lecture', createProxyMiddleware({
-    target: config.BASE_URL + config.CONTENT_PORT,
+    target: config.CONTENT_URL,
     changeOrigin: true
 }))
 
 // ASSIGNMENT SERVICE
 app.use('/assignment', createProxyMiddleware({
-    target: config.BASE_URL + config.ASSIGNMENT_PORT,
+    target: config.ASSIGNMENT_URL,
     changeOrigin: true
 }))
 
