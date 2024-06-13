@@ -11,7 +11,7 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:5000', // Update this with your server URL
+        url: 'https://gateway-mpfy.onrender.com/', // Update this with your server URL
         description: 'Development server',
       },
     ],
