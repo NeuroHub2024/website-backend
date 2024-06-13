@@ -1,6 +1,7 @@
 const express = require('express')
 const {createProxyMiddleware} = require('http-proxy-middleware')
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
 const config = require('./config/index')
 const swagger = require('./swagger');
 
@@ -47,6 +48,8 @@ app.use('/assignment', createProxyMiddleware({
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(cookieParser())
+
+app.use(cors())
 
 app.listen(5000, ()=> console.log(`Gateway service running at http://localhost:5000`))
 
