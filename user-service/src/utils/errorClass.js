@@ -3,7 +3,7 @@
 const STATUS_CODES = {
     OK : 200,
     BAD_REQUEST : 400,
-    UNAUTHORISED : 403,
+    UNAUTHORISED : 401,
     NOT_FOUND : 404,
     INTERNAL_ERROR : 500
 }
@@ -13,7 +13,7 @@ class AppError extends Error {
         super(desc)
         Object.setPrototypeOf(this, new.target.prototype)
         this.name = name
-        this.statusCode = statusCode
+        this.status = statusCode
         this.description, desc
 
         Error.captureStackTrace(this)
@@ -31,7 +31,7 @@ class ApiError extends AppError {
 // 400 : BAD REQUEST
 class ValidationError extends AppError {
     constructor(desc = "Validation Error") {
-        super("Validation Error", STATUS_CODES.Validation_Error, desc)
+        super("Validation Error", STATUS_CODES.BAD_REQUEST, desc)
     
     }
 }
@@ -39,7 +39,7 @@ class ValidationError extends AppError {
 // 401 : AUTHORISATION ERROR
 class AuthorisationError extends AppError {
     constructor(desc = "Authorisation Error") {
-        super("Authorisation Error", STATUS_CODES.INTERNAL_ERROR, desc)
+        super("Authorisation Error", STATUS_CODES.UNAUTHORISED, desc)
         
     }
 }
@@ -47,7 +47,9 @@ class AuthorisationError extends AppError {
 // 404 : NOT FOUND ERROR
 class NotFoundError extends AppError {
     constructor(desc = "API error") {
-        super("API Internal Error", STATUS_CODES.INTERNAL_ERROR, desc)
+        super("API Internal Error", STATUS_CODES.NOT_FOUND, desc)
         
     }
 }
+
+module.exports = {ApiError, ValidationError, AuthorisationError, NotFoundError}
