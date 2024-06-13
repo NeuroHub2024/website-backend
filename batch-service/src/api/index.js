@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const BatchService = require('../service/index')
 const { authUser } = require('../middlewares/authMiddleware');
-const swagger = require('../../../gateway-service/swagger');
 const service = new BatchService()
 
 router.use(authUser);
