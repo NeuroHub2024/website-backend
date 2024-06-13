@@ -3,9 +3,14 @@ const {createProxyMiddleware} = require('http-proxy-middleware')
 const cookieParser = require('cookie-parser')
 const config = require('./config/index')
 const swagger = require('./swagger');
+
+
 const app = express()
 
-app.use('/api', swagger.serve, swagger.setup);
+app.use('/user', swagger.serve, swagger.setup);
+
+
+
 
 app.get('/', (req, res)=>{
     res.send('Gateway service running here')

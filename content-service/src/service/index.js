@@ -35,6 +35,7 @@
 
 // module.exports = LectureService;
 const lectureRepository = require('../database/index');
+const Video = require('../database/models/Video');
 const RequestResponse = require('../utils/ResponseClass');
 const { ApiError, ValidationError } = require('../utils/errorClass');
 
@@ -92,6 +93,19 @@ class LectureService {
             else throw new ApiError('Service Error : ' + err.message);
         }
     }
+
+    async  deleteLecture(lectureId) {
+        try {
+            const result = await this.repo.deleteLecture(lectureId);
+            if (!result) {
+                return { status: 404, data: { message: 'Lecture not found' } };
+            }
+            return { status: 200, data: { message: 'Lecture deleted successfully' } };
+        } catch (err) {
+            return { status: 500, data: { message: 'Internal server error', error: err.message } };
+        }
+    }
 }
+
 
 module.exports = LectureService;

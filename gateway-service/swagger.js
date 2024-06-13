@@ -16,8 +16,12 @@ const options = {
       },
     ],
   },
-  apis: ['../user-service/src/api/index.js'], // Path to the API routes files
+  apis: ['../user-service/src/api/index.js',
+    '../batch-service/src/api/index.js',
+    '../content-service/src/api/index.js',
+  ], // Path to the API routes files
 };
+
 
 const specs = swaggerJsdoc(options);
 
