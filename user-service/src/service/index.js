@@ -73,7 +73,7 @@ class UserService {
                 if (user.password === password) {
                     const token = jwt.sign({ username}, JWT_SECRET);
                     user.password = null;
-                    return new RequestResponse({ user, token }); 
+                    return new RequestResponse({ user, token }, 'User Login Successfull!'); 
                 } else {
                     throw new AuthorisationError('Incorrect password');
                 }

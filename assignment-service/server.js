@@ -19,4 +19,4 @@ app.use((error, req, res, next)=>{
 })
 //#endregion
 
-app.listen(PORT, ()=> console.log(`User service running at http://localhost:${PORT}`))
+app.listen(PORT, ()=> console.log(`Assignment service running at http://localhost:${PORT}`))

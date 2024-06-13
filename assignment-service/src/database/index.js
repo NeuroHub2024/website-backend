@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const connectToDb = require('./connection')
 const Assignment = require('./models/Assignment')
 const AssignmentResponse = require('./models/AssignmentResponse')
-const { ApiError } = require('../utils/errorClass')
+const { ApiError, NotFoundError } = require('../utils/errorClass')
 
 class AssignmentRepository {
     constructor() {
@@ -23,11 +23,20 @@ class AssignmentRepository {
     //#region CREATE A NEW ASSIGNMENT
     async createAssignment(assignmentObj){
         try{
-            const newAssignment = new Assignment(assignmentObj)
-            await newAssignment.save((err, res)=>{
-                if(err) throw err
-                return res
-            })
+            const assignment = new Assignment(assignmentObj)
+            const newAssignment = await assignment.save()
+            return newAssignment
+        }catch(err){
+            throw new ApiError('DB Error : ' + err.message)
+        }
+    }
+    //#endregion
+
+    //#region GET ASSIGNMENT BY ID
+    async getAssignmentById(assignmentId){
+        try{
+            const assignment = await Assignment.findById(assignmentId)
+            return assignment
         }catch(err){
             throw new ApiError('DB Error : ' + err.message)
         }
@@ -35,6 +44,14 @@ class AssignmentRepository {
     //#endregion
 
     //#region EDIT ASSIGNMENT BY ID
+    async editAssignmentById(assignmentId, newAssignmentObj){
+        try{
+            const newAssignment = await Assignment.findByIdAndUpdate(assignmentId, newAssignmentObj)
+            return newAssignment
+        }catch(err){
+            throw new ApiError('DB Error : ' + err.message)
+        }
+    }
     //#endregion
 
     //#region DELETE ASSIGNMENT BY ID
@@ -44,10 +61,8 @@ class AssignmentRepository {
     async createResponse(responseObj){
         try{
             const newResponse = new AssignmentResponse(responseObj)
-            await newResponse.save((err, res)=>{
-                if(err) throw err
-                return res
-            })
+            await newResponse.save()
+            return newResponse
         }catch(err){
             throw new ApiError('DB Error : ' + err.message)
         }

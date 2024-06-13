@@ -6,9 +6,14 @@ const assignmentResponseSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+    assignmentId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Assignment'
+    },
     fileUrl: String,
     submissionTime: {
-        type: Date
+        type: Date,
+        default: Date.now
     },
     isLate: Boolean,
     marks: Number
