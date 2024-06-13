@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const BatchService = require('../service/index')
 const { authUser } = require('../middlewares/authMiddleware');
-const swagger = require('../../../gateway-service/swagger');
 const service = new BatchService()
 
 router.use(authUser);
@@ -39,31 +38,6 @@ router.get('/', async (req, res, next) => {
 //#endregion
 
 //#region GET BATCHES BY USERNAME : [ADMIN, TEACHER, STUDENT]
-/**
- * @swagger
- * /batch/user/{username}:
- *   get:
- *     summary: Get batches by username
- *     tags: [Batch]
- *     parameters:
- *       - in: path
- *         name: username
- *         schema:
- *           type: string
- *         required: true
- *         description: Username to filter batches
- *     responses:
- *       200:
- *         description: List of batches for the specified user
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/batch'
- *       500:
- *         description: Internal server error
- */
 router.get('/user/:username', async (req, res, next) => {
     try {
         const batches = await batchService.findBatchesByUsername(req.params.username);
@@ -109,30 +83,12 @@ router.get('/:id', async (req, res, next) => {
 //#endregion
 
 //#region CREATE A NEW BATCH : [ADMIN, TEACHER]
-/**
- * @swagger
- * /batch:
- *   post:
- *     summary: Add a new Batch
- *     tags: [Batch]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/batch'
- *     responses:
- *       200:
- *         description: Batch added successfully
- *       403:
- *         description: Unauthorized. Only teachers and admins are allowed to create batches.
- *       500:
- *         description: Internal server error
- */
+
 router.post('/', authUser, async (req, res, next) => {
     try {
         const userRole = req.cookies.userRole;
         if (userRole === 'teacher' || userRole === 'admin') {
+            
             await batchService.createBatch(req, res);
         } else {
             res.status(403).json({ error: 'Unauthorized. Only teachers and admins are allowed to create batches.' });
