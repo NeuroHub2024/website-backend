@@ -3,7 +3,7 @@ require('dotenv').config()
 module.exURLs = {
     BASE_URL : process.env.BASE_URL,
     USER_URL : process.env.USER_URL,
-    GATEWAY_PORT : process.env.GATEWAY_PORT,
+    PORT : process.env.PORT,
     BATCH_URL : process.env.BATCH_URL,
     CONTENT_URL : process.env.CONTENT_URL,
     ASSIGNMENT_URL : process.env.ASSIGNMENT_URL,
