@@ -84,7 +84,7 @@ router.get('/:id', async (req, res, next) => {
 
 //#region CREATE A NEW BATCH : [ADMIN, TEACHER]
 
-router.post('/', authUser, async (req, res, next) => {
+router.post('/', async (req, res, next) => {
     try {
         const userRole = req.cookies.userRole;
         if (userRole === 'teacher' || userRole === 'admin') {
