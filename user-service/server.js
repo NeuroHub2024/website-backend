@@ -4,14 +4,24 @@ const api = require('./src/api/index')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const {PORT} = require('./src/config/index')
-
+const cors = require('cors');
 
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 app.use(cookieParser())
-app.use(cors())
-
+const corsOptions = {
+    origin: 'http://localhost:5173', // Replace with your frontend domain
+    credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type,Authorization',
+  };
+  
+  app.use(cors(corsOptions));
+  
+  // Handle preflight requests
+  app.options('*', cors(corsOptions));
 app.use('/', api);
+
 
 //#region ERROR HANDLING MIDDLEWARE
 app.use((error, req, res, next)=>{
