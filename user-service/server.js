@@ -4,7 +4,6 @@ const api = require('./src/api/index')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const {PORT} = require('./src/config/index')
-const cors = require('cors');
 
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
