@@ -14,8 +14,9 @@ const corsOptions = {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type,Authorization',
   };
-  
-  app.use(cors(corsOptions));
+app.use(cors(corsOptions));
+  // Handle preflight requests
+  app.options('*', cors(corsOptions));
 
 app.use('/', api)
 
