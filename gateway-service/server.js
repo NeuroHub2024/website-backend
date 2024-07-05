@@ -49,7 +49,17 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(cookieParser())
 
-app.use(cors())
+const corsOptions = {
+    origin: 'http://localhost:5173', // Replace with your frontend domain
+    credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type,Authorization',
+  };
+  
+  app.use(cors(corsOptions));
+  
+  // Handle preflight requests
+  app.options('*', cors(corsOptions));
 
 app.listen(5000, ()=> console.log(`Gateway service running at http://localhost:5000`))
 

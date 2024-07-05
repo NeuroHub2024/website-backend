@@ -23,13 +23,13 @@ const authUser = async (req, res, next) => {
         } else {
             console.log('No data in response from authentication service');
             res.clearCookie('token'); 
-            return res.status(401).json({ message: 'User unauthenticated' });
+            return res.status(402).json({ message: 'User unauthenticated' });
         }
     } catch (err) {
         console.log('Error during authentication:', err.message);
         console.log(err)
         res.clearCookie('token');
-        return res.status(401).json({ message: 'User unauthenticated' });
+        return res.status(403).json({ message: 'User unauthenticated' });
     }
 };
 
