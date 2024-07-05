@@ -29,7 +29,7 @@ const authUser = async (req, res, next) => {
         console.log('Error during authentication:', err.message);
         console.log(err)
         res.clearCookie('token');
-        return res.status(401).json({ message: 'User is Unauthenticated. Please try again after Login' });
+        return res.status(402).json({ message: 'User is Unauthenticated. Please try again after Login' });
     }
 };
 
