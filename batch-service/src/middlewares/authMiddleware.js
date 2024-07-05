@@ -15,7 +15,7 @@ const authUser = async (req, res, next) => {
 
     try {
         // Sending the token in the headers
-        const response = await axios.post('http://localhost:5000/user/authenticate', {}, { headers });
+        const response = await axios.post('http://localhost:5000/user/authenticate', {token: token}, { headers });
         
         if (response.data) {
             req.userData = response.data;
