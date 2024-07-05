@@ -63,7 +63,7 @@ router.post('/login', async (req, res, next) => {
 //#region AUTHENTICATE USER TOKEN : [ALL] : POST /user/authenticate
 router.post('/authenticate', async (req, res, next) => {
     try {
-        const token = req.cookies.token;
+        const token = req.body.token;
         const userRole = req.cookies.userrole;
         console.log(userRole)
         const {roleList} = req.body;
