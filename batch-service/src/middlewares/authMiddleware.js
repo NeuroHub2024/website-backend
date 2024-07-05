@@ -9,7 +9,7 @@ const authUser = async (req, res, next) => {
     }
 
     const headers = {
-        'Cookie': `token=${token}`,
+        'Set-Cookie': `token=${token}`,
         'Content-Type': 'application/json',
     };
 
