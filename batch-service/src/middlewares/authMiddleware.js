@@ -9,13 +9,14 @@ const authUser = async (req, res, next) => {
     }
 
     const headers = {
-        'Set-Cookie': `token=${token}`,
+        'Cookie': `token=${token}`,
         'Content-Type': 'application/json',
     };
 
     try {
         // Sending the token in the headers
-        const response = await axios.post('https://gateway-mpfy.onrender.com/user/authenticate', {token: token}, { headers });
+        const response = await axios.post('https://gateway-mpfy.onrender.com/user/authenticate', {}, { headers });
+        // const response = await axios.post('https://gateway-mpfy.onrender.com/user/authenticate', {token: token}, { headers });
         
         if (response.data) {
             req.userData = response.data;
