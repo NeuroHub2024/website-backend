@@ -64,6 +64,7 @@ router.post('/login', async (req, res, next) => {
 router.post('/authenticate', async (req, res, next) => {
     try {
         const token = req.body.token;
+        console.log(token)
         const userRole = req.cookies.userrole;
         console.log(userRole)
         const {roleList} = req.body;
