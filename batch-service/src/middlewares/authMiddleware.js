@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const authUser = async (req, res, next) => {
-    const token = req.body.token;
+    const token = req.cookies.token;
 
     if (!token) {
         console.log('No token found in cookies');
