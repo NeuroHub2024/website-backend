@@ -87,12 +87,13 @@ router.get('/:id', async (req, res, next) => {
 router.post('/', authUser, async (req, res, next) => {
     try {
         const userRole = req.cookies.userRole;
-        if (userRole === 'teacher' || userRole === 'admin') {
+        // if (userRole === 'teacher' || userRole === 'admin') {
             
-            await batchService.createBatch(req, res);
-        } else {
-            res.status(403).json({ error: 'Unauthorized. Only teachers and admins are allowed to create batches.' });
-        }
+        //     await batchService.createBatch(req, res);
+        // } else {
+        //     res.status(403).json({ error: 'Unauthorized. Only teachers and admins are allowed to create batches.' });
+        // }
+        await batchService.createBatch(req, res);
     } catch (err) {
         next(err);
     }
