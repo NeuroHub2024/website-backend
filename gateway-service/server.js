@@ -1,6 +1,7 @@
 const express = require('express')
 const {createProxyMiddleware} = require('http-proxy-middleware')
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
 const config = require('./config/index')
 const swagger = require('./swagger');
 
@@ -19,25 +20,25 @@ app.get('/', (req, res)=>{
 //#region GATEWAY ROUTES
 // USER SERVICE
 app.use('/user', createProxyMiddleware({
-    target: config.BASE_URL + config.USER_PORT,
+    target: 'https://user-service-4wcl.onrender.com',
     changeOrigin: true,
 }))
 
 // BATCH SERVICE
 app.use('/batch', createProxyMiddleware({
-    target: config.BASE_URL + config.BATCH_PORT,
+    target: 'https://batch-service.onrender.com',
     changeOrigin: true
 }))
 
 // CONTENT SERVICE
 app.use('/lecture', createProxyMiddleware({
-    target: config.BASE_URL + config.CONTENT_PORT,
+    target: 'https://content-service-ib0m.onrender.com',
     changeOrigin: true
 }))
 
 // ASSIGNMENT SERVICE
 app.use('/assignment', createProxyMiddleware({
-    target: config.BASE_URL + config.ASSIGNMENT_PORT,
+    target: 'https://assignment-service-7w4r.onrender.com',
     changeOrigin: true
 }))
 
@@ -48,5 +49,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(cookieParser())
 
-app.listen(config.GATEWAY_PORT, ()=> console.log(`Gateway service running at ${config.BASE_URL + config.GATEWAY_PORT}`))
+app.use(cors())
+
+app.listen(5000, ()=> console.log(`Gateway service running at http://localhost:5000`))
 

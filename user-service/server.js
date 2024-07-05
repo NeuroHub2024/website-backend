@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const api = require('./src/api/index')
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
 const {PORT} = require('./src/config/index')
 const cors = require('cors');
 
