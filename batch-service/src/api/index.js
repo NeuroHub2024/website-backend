@@ -27,7 +27,7 @@ const batchService = new BatchService();
  *       500:
  *         description: Internal server error
  */
-router.get('/', async (req, res, next) => {
+router.post('/getbatches', async (req, res, next) => {
     try {
         const batches = await batchService.getAllBatches();
         res.json(batches);
