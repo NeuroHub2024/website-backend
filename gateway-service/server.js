@@ -11,7 +11,7 @@ const app = express()
 app.use('/api', swagger.serve, swagger.setup);
 
 const corsOptions = {
-    origin: 'http://localhost:5173', // Replace with your frontend domain
+    origin: true, // Replace with your frontend domain
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'content-type,authorization',
