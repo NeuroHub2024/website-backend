@@ -14,7 +14,7 @@ const corsOptions = {
     origin: 'http://localhost:5173', // Replace with your frontend domain
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    allowedHeaders: 'Content-Type,Authorization',
+    allowedHeaders: 'content-type,authorization',
   };
   
   app.use(cors(corsOptions));
