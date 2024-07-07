@@ -4,7 +4,7 @@ const BatchService = require('../service/index')
 const { authUser } = require('../middlewares/authMiddleware');
 const service = new BatchService()
 
-// router.use(authUser);
+router.use(authUser);
 
 const batchService = new BatchService();
 
