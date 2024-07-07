@@ -2,9 +2,9 @@ const axios = require('axios');
 
 const authUser = async (req, res, next) => {
     console.log('headers : ')
-    console.log(req.headers)
+    console.log(res.headers)
     // const token = req.body.token;
-    const authorization = req.headers['Authorization'];
+    const authorization = res.headers['Authorization'];
     console.log('authorizaton : ' + authorization)
     let token = ''
     if(authorization) {
