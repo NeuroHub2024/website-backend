@@ -6,7 +6,7 @@ const authUser = async (req, res, next) => {
     console.log('Response headers : ')
     console.log(res.headers)
     // const token = req.body.token;
-    const authorization = res.headers['authorization'];
+    const authorization = req.headers['authorization'];
     console.log('authorizaton : ' + authorization)
     let token = ''
     if(authorization) {
