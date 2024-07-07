@@ -6,12 +6,12 @@ const authUser = async (req, res, next) => {
     console.log('Response headers : ')
     console.log(res.headers)
     // const token = req.body.token;
-    // const authorization = res.headers['Authorization'];
-    // console.log('authorizaton : ' + authorization)
+    const authorization = res.headers['authorization'];
+    console.log('authorizaton : ' + authorization)
     let token = ''
-    // if(authorization) {
-    //     token = authorization.split(' ')[1]
-    // }
+    if(authorization) {
+        token = authorization.split(' ')[1]
+    }
     console.log('token = ' + token)
 
     if (!token) {
