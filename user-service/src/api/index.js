@@ -51,7 +51,9 @@ router.post('/login', async (req, res, next) => {
             throw new ApiError('Request object not present')
         }
         const response = await service.loginUser(req.body);
-        res.cookie('token', response.data.token);
+        res.cookie('token', response.data.token, {
+            sameSite: 'None'
+        });
         res.cookie('userrole', response.data.user.role);
         res.json(response);
     } catch (err) {
