@@ -17,7 +17,21 @@ class AssignmentService {
             else throw new ApiError('Error in Service : ' + err.message)
         }
     }
+    
+
     //#endregion
+    async getAssignmentById(assignmentId){
+        try {
+            const assignment = await this.repo.getAssignmentById(assignmentId)
+            if(!assignment) {
+                throw new ApiError('Assignment not found')
+            }
+            return new RequestResponse(assignment)
+        } catch (err) {
+            if (err instanceof ApiError) throw err
+            else throw new ApiError('Error in Service : ' + err.message)
+        }
+    }
 
     //#region CREATE NEW ASSIGNMENT : [ADMIN, TEACHER]
     async createAssignment({title, body, due, batchId, createdBy}) {

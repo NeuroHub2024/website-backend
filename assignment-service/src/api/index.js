@@ -10,14 +10,23 @@ const service = new AssignmentService()
 router.get('/', async(req, res, next)=>{
     // res.send('Assignment service running here')
     try{
-        const role = req.cookies.role
-        if(!role || role != 'Admin') {
-            throw new AuthorisationError('User of this role is not authorized')
-        }
+        // const role = req.cookies.role
+        // if(!role || role != 'Admin') {
+        //     throw new AuthorisationError('User of this role is not authorized')
+        // }
         console.log(role)
         const response = await service.getAllAssignments()
         res.json(response.data)
     }catch(err){
+        next(err)
+    }
+})
+router.get('/:id', authUser, async (req, res, next) => {
+    try {
+        const assignmentId = req.params.id
+        const response = await service.getAssignmentById(assignmentId)
+        res.json(response.data)
+    } catch (err) {
         next(err)
     }
 })
