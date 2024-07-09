@@ -14,7 +14,7 @@ router.get('/', async(req, res, next)=>{
         // if(!role || role != 'Admin') {
         //     throw new AuthorisationError('User of this role is not authorized')
         // }
-        console.log(role)
+        // console.log(role)
         const response = await service.getAllAssignments()
         res.json(response.data)
     }catch(err){
