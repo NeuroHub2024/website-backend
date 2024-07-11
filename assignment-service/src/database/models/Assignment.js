@@ -1,6 +1,4 @@
 const mongoose = require('mongoose')
-// const User = require('./User')
-// const Batch = require('./Batch')
 const {Schema} = mongoose
 
 const assignmentSchema = new Schema({

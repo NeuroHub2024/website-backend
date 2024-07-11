@@ -3,5 +3,6 @@
 /gateway-service/node_modules
 /content-service/node_modules
 /assignment-service/node_modules
+/announcement-service/node_modules
 tasks_and_plan.txt
 tasks.txt

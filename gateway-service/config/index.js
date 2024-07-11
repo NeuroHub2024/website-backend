@@ -10,4 +10,5 @@ module.exURLs = {
     ROOM_URL : process.env.ROOM_URL,
     COURSE_URL : process.env.COURSE_URL,
     TEST_URL : process.env.TEST_URL,
+    ANNOUNCEMENT_PORT: process.env.ANNOUNCEMENT_PORT
 }
