@@ -9,12 +9,13 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(cookieParser())
 const corsOptions = {
-    origin: 'http://localhost:5173', // Replace with your frontend domain
+    origin: true, // Replace with your frontend domain
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    allowedHeaders: 'Content-Type,Authorization',
+    allowedHeaders: 'content-type, authorization, cookie',
   };
-app.use(cors(corsOptions));
+  
+  app.use(cors(corsOptions))
   // Handle preflight requests
   app.options('*', cors(corsOptions));
 
