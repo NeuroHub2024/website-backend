@@ -9,18 +9,6 @@ const app = express()
 
 app.use('/api', swagger.serve, swagger.setup);
 
-const corsOptions = {
-    origin: true, // Replace with your frontend domain
-    credentials: true,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    allowedHeaders: 'content-type,authorization',
-  };
-  
-  app.use(cors(corsOptions));
-  
-  // Handle preflight requests
-  app.options('*', cors(corsOptions));
-
 
 app.get('/', (req, res)=>{
     res.send('Gateway service running here')

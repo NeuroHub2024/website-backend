@@ -21,9 +21,9 @@ router.get('/', async(req, res, next)=>{
         next(err)
     }
 })
-router.get('/:id', async (req, res, next) => {
+router.get('/:assignmentId', async (req, res, next) => {
     try {
-        const assignmentId = req.params.id
+        const assignmentId = req.params.assignmentId
         const response = await service.getAssignmentById(assignmentId)
         res.json(response.data)
     } catch (err) {
