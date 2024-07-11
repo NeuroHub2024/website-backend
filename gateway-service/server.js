@@ -38,8 +38,18 @@ app.use('/lecture', createProxyMiddleware({
 // ASSIGNMENT SERVICE
 app.use('/assignment', createProxyMiddleware({
     target: 'https://assignment-service-7w4r.onrender.com',
+    
     changeOrigin: true
+    
 }))
+// ANNOUNCEMENT SERVICE
+const announcementUrl = `${config.BASE_URL}+${config.ANNOUNCEMENT_PORT}`;
+console.log(`Announcement URL: ${announcementUrl}`); 
+
+app.use('/announcement', createProxyMiddleware({
+    target: 'http://localhost:5008',
+    changeOrigin: true
+}));
 
 // TEST SERVICE
 //#endregion GATEWAY ROUTES END
