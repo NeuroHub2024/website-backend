@@ -222,9 +222,9 @@ class BatchService {
     //#endregion
 
     //#region ADD ASSIGNMENT TO BATCH : [ADMIN, TEACHER]
-    async addAssignmentToBatch(batchId, assignmentId) {
+    async addAssignmentToBatch(batchId, announcementId) {
         try {
-            const updatedBatch = await this.repo.addAssignmentToBatch(batchId, assignmentId);
+            const updatedBatch = await this.repo.addAssignmentToBatch(batchId, announcementId);
             return updatedBatch;
         } catch (err) {
             if (err instanceof ApiError) {
@@ -250,6 +250,18 @@ class BatchService {
         }
     }
     //#endregion
+    async addAnnouncementToBatch(batchId, assignmentId) {
+        try {
+            const updatedBatch = await this.repo.addAnnouncementToBatch(batchId, assignmentId);
+            return updatedBatch;
+        } catch (err) {
+            if (err instanceof ApiError) {
+                throw err;
+            } else {
+                throw new ApiError('Service Error : ' + err.message);
+            }
+        }
+    }
 }
 
 module.exports = BatchService;

@@ -453,6 +453,14 @@ router.delete('/:batchId/assignment/:assignmentId', authUser, async (req, res, n
     }
 });
 //#endregion
+router.post('/:batchId/announcement/:announcementId', async (req, res, next) => {
+    try {
+        const updatedBatch = await batchService.addAnnouncementToBatch(req.params.batchId, req.params.announcementId);
+        res.json(updatedBatch);
+    } catch (err) {
+        next(err);
+    }
+});
 
 module.exports = router;
 

@@ -196,6 +196,18 @@ class BatchRepository {
         }
     }
     //#endregion
+    async addAnnouncementToBatch(batchId, announcementId) {
+        try {
+            const updatedBatch = await Batch.findByIdAndUpdate(
+                batchId,
+                { $addToSet: { announcements: announcementId } },
+                { new: true }
+            );
+            return updatedBatch;
+        } catch (err) {
+            throw new ApiError('DB Error : ' + err.message);
+        }
+    }
 }
 
 module.exports = BatchRepository;
