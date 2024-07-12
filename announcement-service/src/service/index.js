@@ -54,6 +54,41 @@ async deleteAnnouncement(id) {
     
     
     //#endregion
+    // ADD ANNOUNCEMENT TO BATCH
+    async addAnnouncementToBatch(batchId, announcementId) {
+        const announcement = await this.repo.addAnnouncementToBatch(batchId, announcementId);
+        if (!announcement) {
+            throw new NotFoundError('Batch or Announcement not found');
+        }
+        return announcement;
+    }
+    //#region CREATE NEW ASSIGNMENT : [ADMIN, TEACHER]
+    async createAnnouncement({batchId, date , title, message}) {
+        try{
+            if(!title || title === ''){
+                throw new ValidationError('Error in Service : Announcement title not provided')
+            }
+           
+            if(!batchId || batchId === ''){
+                throw new ValidationError('Error in Service : Announcement batchId not provided')
+            }
+            if(!message || message === ''){
+                throw new ValidationError('Error in Service : Announcement message not provided')
+            }
+            if(!date){
+                throw new ValidationError('Error in Service : Announcement  date not provided')
+            }
+
+            const assignmentObj = {batchId, date , title, message}
+            const newAssignment = await this.repo.createAnnouncement(assignmentObj)
+            return new RequestResponse(newAssignment)
+        } catch(err){
+            if(err instanceof ApiError || err instanceof ValidationError) throw err
+            else{ 
+                throw new ApiError('Error in service : ' + err.message)
+            }
+        }
+    }
 }
 
 module.exports = AnnouncementService

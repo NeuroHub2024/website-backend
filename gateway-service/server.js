@@ -40,9 +40,6 @@ app.use('/assignment', createProxyMiddleware({
     changeOrigin: true
     
 }))
-// ANNOUNCEMENT SERVICE
-const announcementUrl = `${config.BASE_URL}+${config.ANNOUNCEMENT_PORT}`;
-console.log(`Announcement URL: ${announcementUrl}`); 
 
 app.use('/announcement', createProxyMiddleware({
     target: 'https://announcement-service.onrender.com',

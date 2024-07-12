@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const connectToDb = require('./connection')
 const Announcement = require('./models/announcement')
 const { ApiError, NotFoundError } = require('../utils/error')
-
+const Batch = require('../../../batch-service/src/database/models/Batch');
 class AnnouncementRepository {
     constructor() {
         connectToDb()
@@ -63,7 +63,23 @@ class AnnouncementRepository {
             throw new ApiError('DB Error : ' + err.message);
         }
     }
-   
+   // ADD ANNOUNCEMENT TO BATCH
+   async addAnnouncementToBatch(batchId, announcementId) {
+    try {
+        const batch = await Batch.findById(batchId);
+        const announcement = await Announcement.findById(announcementId);
+        if (!batch || !announcement) {
+            throw new NotFoundError('Batch or Announcement not found');
+        }
+
+        announcement.batchId = batchId;
+        await announcement.save();
+
+        return announcement;
+    } catch (err) {
+        throw new ApiError('DB Error : ' + err.message);
+    }
+}
    
 }
 

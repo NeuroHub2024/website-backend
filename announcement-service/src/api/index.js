@@ -62,5 +62,19 @@ router.delete('/:id', async (req, res, next) => {
         next(err);
     }
 });
+router.post('/createannouncement/:batchId', async (req, res, next)=> {
+    try{
+        const batchId = req.params.batchId
+        const {date, title, message} = req.body
+        const inputs = {
+            batchId, date , title, message
+        }
+        const response = await announcementService.createAnnouncement(inputs)
+        res.json(response.data)
+    }catch(err){
+        next(err)
+    }
+})
+
 
 module.exports = router;
