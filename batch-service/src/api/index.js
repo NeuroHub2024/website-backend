@@ -453,6 +453,31 @@ router.delete('/:batchId/assignment/:assignmentId', authUser, async (req, res, n
     }
 });
 //#endregion
+/**
+ * @swagger
+ * /batch/{batchId}/announcement/{announcementId}:
+ *   post:
+ *     summary: Add an assignment to a batch
+ *     tags: [Batch]
+ *     parameters:
+ *       - in: path
+ *         name: batchId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Batch ID
+ *       - in: path
+ *         name: announcementId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Announcement ID
+ *     responses:
+ *       200:
+ *         description: Announcement added to batch successfully
+ *       500:
+ *         description: Internal server error
+ */
 router.post('/:batchId/announcement/:announcementId', async (req, res, next) => {
     try {
         const updatedBatch = await batchService.addAnnouncementToBatch(req.params.batchId, req.params.announcementId);
