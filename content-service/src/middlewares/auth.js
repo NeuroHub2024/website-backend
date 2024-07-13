@@ -2,7 +2,14 @@
 const axios = require('axios');
 
 const authUserAndBatch = async (req, res, next) => {
-    const token = req.cookies.token;
+    // const token = req.cookies.token;
+    const authorization = req.headers['authorization'];
+    console.log('authorizaton : ' + authorization)
+    let token = ''
+    if(authorization) {
+        token = authorization.split(' ')[1]
+    }
+    console.log('token = ' + token)
 
     if (!token) {
         console.log('No token found in cookies');
@@ -16,7 +23,7 @@ const authUserAndBatch = async (req, res, next) => {
 
     try {
         // Sending the token in the headers
-        const response = await axios.post('http://localhost:5000/user/authenticate', {}, { headers });
+        const response = await axios.post('http://localhost:5000/user/authenticate', {token: token}, { headers });
         
         if (response.data) {
             req.userData = response.data;
