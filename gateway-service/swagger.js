@@ -19,6 +19,8 @@ const options = {
   apis: ['../user-service/src/api/index.js',
     '../batch-service/src/api/index.js',
     '../content-service/src/api/index.js',
+    '../assignment-service/src/api/index.js',
+    '../announcement-service/src/api/index.js'
   ], // Path to the API routes files
 };
 

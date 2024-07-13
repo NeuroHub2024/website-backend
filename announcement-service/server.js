@@ -19,7 +19,7 @@ app.use(cors(corsOptions));
   // Handle preflight requests
 app.options('*', cors(corsOptions));
 
-app.use('/', api)
+app.use('/', api);
 
 //#region ERROR HANDLING MIDDLEWARE
 app.use((error, req, res, next)=>{
