@@ -3,7 +3,7 @@ const express = require('express');
 const LectureService = require('../service/index');
 const { authUserAndBatch } = require('../middlewares/auth');
 const router = express.Router();
-router.use(authUserAndBatch);
+// router.use(authUserAndBatch);
 const service = new LectureService();
 /**
  * @swagger
