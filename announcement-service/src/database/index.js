@@ -66,14 +66,14 @@ class AnnouncementRepository {
    // ADD ANNOUNCEMENT TO BATCH
    async addAnnouncementToBatch(batchId, announcementId) {
     try {
-        const batch = await Batch.findById(batchId);
+        // const batch = await Batch.findById(batchId);
         const announcement = await Announcement.findById(announcementId);
-        if (!batch || !announcement) {
-            throw new NotFoundError('Batch or Announcement not found');
-        }
+        // if (!batch || !announcement) {
+        //     throw new NotFoundError('Batch or Announcement not found');
+        // }
 
-        announcement.batchId = batchId;
-        await announcement.save();
+        // announcement.batchId = batchId;
+        // await announcement.save();
 
         return announcement;
     } catch (err) {
