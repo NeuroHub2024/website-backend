@@ -34,7 +34,7 @@ const authUserAndBatch = async (req, res, next) => {
             return res.status(401).json({ message: 'User unauthenticated' });
         }
     } catch (err) {
-        console.log('Error during authentication:', err.message);
+        console.log('Error during authentication: ' + err.message);
         res.clearCookie('token');
         return res.status(401).json({ message: 'User unauthenticated' });
     }
