@@ -9,7 +9,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(cookieParser())
 const corsOptions = {
-    origin: true, // Replace with your frontend domain
+    origin: 'http://localhost:5173/', // Replace with your frontend domain
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'content-type, authorization, cookie',
