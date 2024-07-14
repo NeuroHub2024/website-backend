@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const connectToDb = require('./connection')
 const Announcement = require('./models/announcement')
 const { ApiError, NotFoundError } = require('../utils/error')
-const Batch = require('../../../batch-service/src/database/models/Batch');
+// const Batch = require('../../../batch-service/src/database/models/Batch');
 class AnnouncementRepository {
     constructor() {
         connectToDb()
